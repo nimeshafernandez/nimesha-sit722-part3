@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  fastapi-app:
+    image: week07.azurecr.io/book-apis:latest 
+    container_name: fastapi-app
+    environment:
+      - PORT=8000
+      - DATABASE_URL=postgresql://week7_p4g6_user:ZDEYlbNTnxyL1ZqfaLPrSIjec74XjY6M@dpg-cs0ghfjtq21c73ecg6o0-a.oregon-postgres.render.com/week7_p4g6
+    ports:
+      - "8000:8000"
+    depends_on:
+      - inventory-service
+
+  inventory-service:
+    image: week07.azurecr.io/inventory:latest
+    container_name: inventory-service
+    environment:
+      - PORT=8001
+      - DATABASE_URL=postgresql://week7_p4g6_user:ZDEYlbNTnxyL1ZqfaLPrSIjec74XjY6M@dpg-cs0ghfjtq21c73ecg6o0-a.oregon-postgres.render.com/week7_p4g6
+    ports:
+      - "8001:8001"
+
+networks:
+  default:
+    driver: bridge
